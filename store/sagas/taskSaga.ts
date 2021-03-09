@@ -3,12 +3,11 @@ import { search } from "../../service/api";
 import { searchArtist } from "../action/action";
 import { actionTypes, SEARCH } from "../action/types";
 
-function* searchTsk({ artist }: actionTypes) {
+function* searchTsk({ artist }: actionTypes): Generator<any> {
+  console.log(`artist: ${artist}`);
   try {
-    console.log(`artist: ${artist}`);
     const task = yield call(search, artist);
-
-    yield put(searchArtist(task));
+    // yield put(searchArtist(task));
   } catch (e) {
     console.log(`saga error: ${e}`);
   }

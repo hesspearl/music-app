@@ -6,8 +6,14 @@ import HeadPhone from "../assets/image/head-phone.svg";
 import PlayButton from "../assets/image/play-button.svg";
 import { searchArtist } from "../store/action/action";
 import { RootState } from "../store/reducer/root";
+import SearchCard from "../components/searchCard";
+import { ProfileScreenNavigationProp } from "../declarations";
 
-const SearchScreen = () => {
+interface Props {
+  navigation: ProfileScreenNavigationProp;
+}
+
+const SearchScreen = ({ ...props }: Props) => {
   const [text, setText] = useState("");
   const state = useSelector((state: RootState) => state.release);
   const dispatch = useDispatch();
@@ -29,6 +35,9 @@ const SearchScreen = () => {
         />
       </View>
       <Button title="press" onPress={pressHandler} />
+
+      <SearchCard onPress={() => props.navigation.navigate("artistReview")} />
+
       <StatusBar style="auto" />
     </View>
   );
