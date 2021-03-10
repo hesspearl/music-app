@@ -6,7 +6,7 @@ import PlayButton from "../assets/image/play-button.svg";
 import { searchArtist } from "../store/action/action";
 import { RootState } from "../store/reducer/root";
 import SearchCard from "../components/searchCard";
-import { ProfileScreenNavigationProp } from "../declarations";
+import { ProfileScreenNavigationProp } from "..";
 
 interface Props {
   navigation: ProfileScreenNavigationProp;
@@ -34,8 +34,16 @@ const SearchScreen = ({ ...props }: Props) => {
         />
       </View>
       <Button title="press" onPress={pressHandler} />
-
-      <SearchCard onPress={() => props.navigation.navigate("artistReview")} />
+      <View style={{ width: "100%", padding: 15 }}>
+        <SearchCard
+          pic={require("../assets/image/profile-pic-nirvana.jpg")}
+          txt_1="Nirvana"
+          txt_2="Rock"
+          txt_3="Band"
+          color="primary"
+          onPress={() => props.navigation.navigate("artistReview")}
+        />
+      </View>
     </View>
   );
 };

@@ -1,11 +1,15 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Text ,TouchableOpacity } from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
 import Releases from "../components/releases"
+import { ProfileScreenNavigationProp } from "..";
 
-const artistReviewScreen = () => {
+interface Props {
+  navigation: ProfileScreenNavigationProp;
+}
+const artistReviewScreen = (props:Props) => {
   const { colors } = useTheme();
   return (
     <SafeAreaView style={styles.container}>
@@ -34,16 +38,26 @@ const artistReviewScreen = () => {
           </Text>
         </View>
       </View>
-      <Text style={{ ...styles.text, color: colors.card }}> Members</Text>
-      <Text style={{ ...styles.text, color: colors.card }}> Releases</Text>
+      {/* <Text style={{ ...styles.text, color: colors.card }}> Members</Text> */}
+      <View style={{...styles.titles,alignItems:"flex-start",}}>
+         <Text style={{ ...styles.text, color: colors.card }}> Releases</Text>
+      </View>
+     
       <View style={styles.releases}>
      <Releases pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}/>
      <Releases pic={require("../assets/image/R-2070548-1554732548-3612.jpeg.jpg")}/>
      <Releases pic={require("../assets/image/R-3627741-1353197616-4967.jpeg.jpg")}/>
       </View>
 
+    <TouchableOpacity
     
-      <Text style={{ ...styles.text, color: colors.card }}> Show All > </Text>
+    style={{...styles.titles,alignItems:"flex-end",}}
+    
+    onPress={() => props.navigation.navigate("release") }>
+      <Text
+      style={{ ...styles.text, color: colors.card }}> Show All > </Text>
+    </TouchableOpacity>
+      
     </SafeAreaView>
   );
 };
@@ -95,7 +109,11 @@ const styles = StyleSheet.create({
   },
   releases:{
     flexDirection:"row"
-  }
+  },
+  titles:{
+    width:"100%",
+    
+     padding:10}
 });
 
 export default artistReviewScreen;

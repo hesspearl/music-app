@@ -1,25 +1,41 @@
 import React from "react";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ImageSourcePropType,
+} from "react-native";
 import Texts from "./Texts";
+import { useTheme } from "@react-navigation/native";
 
 interface Props {
-  onPress: () => {};
+  onPress?: Function;
+  color: "primary" | "card";
+
+  pic: ImageSourcePropType;
+
+  txt_1: String;
+  txt_2: String;
+  txt_3: String;
 }
 
-const SearchCard = ({ onPress }: Props) => {
+const SearchCard = ({ onPress, color, txt_1, txt_2, txt_3, pic }: Props) => {
+  const { colors } = useTheme();
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      style={{ ...styles.container, backgroundColor: colors[color] }}
+      onPress={onPress}
+    >
       <View style={styles.imgContainer}>
-        <Image
-          source={require("../assets/image/profile-pic-nirvana.jpg")}
-          style={styles.image}
-        />
+        <Image resizeMode="stretch" source={pic} style={styles.image} />
       </View>
 
       <View style={styles.content}>
-        <Texts> Nirvana</Texts>
-        <Texts> Rock</Texts>
-        <Texts> Band</Texts>
+        <Texts>{txt_1}</Texts>
+        <Texts>{txt_2}</Texts>
+        <Texts>{txt_3}</Texts>
       </View>
     </TouchableOpacity>
   );
@@ -27,8 +43,7 @@ const SearchCard = ({ onPress }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#DCF0FF",
-    width: "80%",
+    width: "100%",
     height: 100,
     borderRadius: 10,
     elevation: 5,

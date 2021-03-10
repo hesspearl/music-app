@@ -1,14 +1,19 @@
 import React from "react";
-import { View, Image, StyleSheet, ImageSourcePropType } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ImageSourcePropType,
+} from "react-native";
 
 type props = {
   pic: ImageSourcePropType;
 };
 const Releases = ({ pic }: props) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <Image style={styles.image} source={pic} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
