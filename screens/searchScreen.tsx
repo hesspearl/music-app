@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, TextInput, View, Button } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import HeadPhone from "../assets/image/head-phone.svg";
@@ -37,8 +36,6 @@ const SearchScreen = ({ ...props }: Props) => {
       <Button title="press" onPress={pressHandler} />
 
       <SearchCard onPress={() => props.navigation.navigate("artistReview")} />
-
-      <StatusBar style="auto" />
     </View>
   );
 };

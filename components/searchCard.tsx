@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import Texts from "./Texts";
 
 interface Props {
-  children: String;
   onPress: () => {};
 }
 
@@ -23,10 +23,6 @@ const SearchCard = ({ onPress }: Props) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-const Texts = ({ children }: Pick<Props, "children">) => {
-  return <Text style={styles.txt}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -52,10 +48,6 @@ const styles = StyleSheet.create({
   },
   content: {
     marginStart: 20,
-  },
-  txt: {
-    color: "#D392FC",
-    fontWeight: "bold",
   },
 });
 export default SearchCard;
