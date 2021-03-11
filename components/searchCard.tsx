@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 80,
+    borderRadius: 5,
   },
   imgContainer: {
     justifyContent: "center",
     height: "100%",
-    opacity: 0.5,
+    opacity: 0.8,
   },
   content: {
     marginStart: 20,

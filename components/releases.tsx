@@ -8,10 +8,11 @@ import {
 
 type props = {
   pic: ImageSourcePropType;
+  onPress?: Function;
 };
-const Releases = ({ pic }: props) => {
+const Releases = ({ pic, onPress }: props) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <Image style={styles.image} source={pic} />
     </TouchableOpacity>
   );

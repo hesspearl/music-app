@@ -4,7 +4,7 @@ import { View, Image, StyleSheet, Text ,TouchableOpacity } from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
 import Releases from "../components/releases"
-import { ProfileScreenNavigationProp } from "..";
+import { ProfileScreenNavigationProp } from "../index";
 
 interface Props {
   navigation: ProfileScreenNavigationProp;
@@ -44,7 +44,9 @@ const artistReviewScreen = (props:Props) => {
       </View>
      
       <View style={styles.releases}>
-     <Releases pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}/>
+     <Releases
+     onPress={()=> props.navigation.navigate("releaseReview")}
+     pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}/>
      <Releases pic={require("../assets/image/R-2070548-1554732548-3612.jpeg.jpg")}/>
      <Releases pic={require("../assets/image/R-3627741-1353197616-4967.jpeg.jpg")}/>
       </View>
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     
     padding: 5,
 
-    marginVertical: 10,
+    marginVertical: 50,
   },
   header: {
     flexDirection: "row",

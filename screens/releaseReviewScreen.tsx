@@ -1,9 +1,20 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Texts from "../components/Texts";
+import { ProfileScreenNavigationProp } from "../index";
+interface Props {
+  navigation: ProfileScreenNavigationProp;
+}
 
-const ReleaseReviewScreen = () => {
+const ReleaseReviewScreen = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -25,16 +36,32 @@ const ReleaseReviewScreen = () => {
             <Texts> USA</Texts>
           </View>
         </View>
-        <View style={styles.label}>
-          <Text style={{ color: "#DCF0FF" }}>Label</Text>
-        </View>
+
         <View style={styles.titles}>
           <Text style={styles.text}> Track List</Text>
         </View>
         <View style={styles.list}>
-          <Text style={styles.text}>Radio Friendly Unit Shifter</Text>
-          <Text style={styles.text}>Drain you</Text>
-          <Text style={styles.text}>Breed</Text>
+          <ScrollView
+            style={{
+              flex: 1,
+            }}
+          >
+            <Text style={styles.text}>Radio Friendly Unit Shifter</Text>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("releaseReview")}
+              style={styles.label}
+            >
+              <Text style={{ color: "#DCF0FF" }}>Label</Text>
+            </TouchableOpacity>
+            <Text style={styles.text}>Drain you</Text>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("releaseReview")}
+              style={styles.label}
+            >
+              <Text style={{ color: "#DCF0FF" }}>Label</Text>
+            </TouchableOpacity>
+            <Text style={styles.text}>Breed</Text>
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>
@@ -89,11 +116,9 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: "#FFDFF7",
     width: "90%",
-    height: "50%",
+    height: "60%",
     borderRadius: 10,
     padding: 20,
-
-    alignItems: "flex-start",
   },
   titles: {
     width: "100%",
@@ -101,10 +126,10 @@ const styles = StyleSheet.create({
     marginStart: 15,
   },
   text: {
-    textAlign: "center",
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#D392FC",
+    marginBottom: 5,
   },
 });
 

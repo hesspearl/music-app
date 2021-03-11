@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View, Button } from "react-native";
+import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import HeadPhone from "../assets/image/head-phone.svg";
 import PlayButton from "../assets/image/play-button.svg";
 import { searchArtist } from "../store/action/action";
 import { RootState } from "../store/reducer/root";
 import SearchCard from "../components/searchCard";
-import { ProfileScreenNavigationProp } from "..";
+import { ProfileScreenNavigationProp } from "../index";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 interface Props {
   navigation: ProfileScreenNavigationProp;
@@ -33,7 +34,10 @@ const SearchScreen = ({ ...props }: Props) => {
           onChangeText={(text: string) => setText(text)}
         />
       </View>
-      <Button title="press" onPress={pressHandler} />
+
+      <TouchableOpacity onPress={pressHandler}>
+        <AntDesign name="search1" size={24} color="black" />
+      </TouchableOpacity>
       <View style={{ width: "100%", padding: 15 }}>
         <SearchCard
           pic={require("../assets/image/profile-pic-nirvana.jpg")}
