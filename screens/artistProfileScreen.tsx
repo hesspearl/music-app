@@ -4,13 +4,17 @@ import { View, Image, StyleSheet, Text ,TouchableOpacity } from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
 import Releases from "../components/releases"
-import { ProfileScreenNavigationProp } from "../index";
+import { ProfileScreenNavigationProp  , ProfileScreenRouteProp} from "../index";
 
 interface Props {
+  route:ProfileScreenRouteProp
   navigation: ProfileScreenNavigationProp;
 }
 const artistReviewScreen = (props:Props) => {
   const { colors } = useTheme();
+  const {id}=props.route.params
+
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>

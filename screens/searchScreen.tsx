@@ -45,7 +45,7 @@ const SearchScreen = ({ ...props }: Props) => {
           txt_2="Rock"
           txt_3="Band"
           color="primary"
-          onPress={() => props.navigation.navigate("artistReview")}
+          onPress={() => props.navigation.navigate("artistProfile")}
         />
       </View>
     </View>
