@@ -1,10 +1,13 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Image, StyleSheet, Text ,TouchableOpacity } from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
 import Releases from "../components/releases"
 import { ProfileScreenNavigationProp  , ProfileScreenRouteProp} from "../index";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/reducer/root";
+import { getArtist, getRelease } from "../store/action/action";
 
 interface Props {
   route:ProfileScreenRouteProp
@@ -13,7 +16,14 @@ interface Props {
 const artistReviewScreen = (props:Props) => {
   const { colors } = useTheme();
   const {id}=props.route.params
+  const dispatch = useDispatch()
+  const state = useSelector((state: RootState) => state.release);
 
+  useEffect(() => {
+    dispatch(getArtist(id))
+    dispatch(getRelease(id, "artists"))
+
+  }, [id])
   
   return (
     <SafeAreaView style={styles.container}>

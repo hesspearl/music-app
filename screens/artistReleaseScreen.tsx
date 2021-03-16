@@ -13,8 +13,13 @@ import { ProfileScreenNavigationProp } from "../index";
 interface Props {
   navigation: ProfileScreenNavigationProp;
 }
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/reducer/root";
 
 const ReleaseReviewScreen = (props: Props) => {
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.release);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>

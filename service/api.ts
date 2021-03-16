@@ -1,12 +1,13 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { Config } from "react-native-config";
+import { ObjectResult } from "../store/action/types";
 
 const token = Config.ACCESS_TOKEN;
 const tokenSecret = Config.ACCESS_TOKEN_SECRET;
 const consumerKey = Config.CONSUMER_KEY;
 const consumerSecret = Config.CONSUMER_SECRET;
 
-export const search = async (query: string) => {
+export const search = async (query: String): Promise<ObjectResult> => {
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -23,8 +24,33 @@ export const search = async (query: string) => {
     redirect: "follow",
   };
 
-  fetch(`https://api.discogs.com/database/search?q=${query}`, requestOptions)
+  const res = await fetch(
+    `https://api.discogs.com/database/search?q=${query}`,
+    requestOptions
+  );
+
+  const result = await res.json();
+
+  return result;
+};
+
+export const getArtistData = async (id: Number) => {
+  return fetch(`https://api.discogs.com/artists/${id}`)
     .then((response) => response.text())
-    .then((result) => console.log(result))
+    .then((result) => result)
+    .catch((error) => console.log("error", error));
+};
+
+export const getReleases = async (id: Number, type: String) => {
+  return fetch(`https://api.discogs.com/${type}/${id}/releases`)
+    .then((response) => response.text())
+    .then((result) => result)
+    .catch((error) => console.log("error", error));
+};
+
+export const getReleaseData = async (id: Number) => {
+  return fetch(`https://api.discogs.com/masters/${id}`)
+    .then((response) => response.text())
+    .then((result) => result)
     .catch((error) => console.log("error", error));
 };
