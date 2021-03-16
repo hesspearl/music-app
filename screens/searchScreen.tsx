@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import HeadPhone from "../assets/image/head-phone.svg";
 import PlayButton from "../assets/image/play-button.svg";
@@ -27,17 +33,23 @@ const SearchScreen = ({ ...props }: Props) => {
     <View style={styles.container}>
       <HeadPhone width="100" height="241" />
       <PlayButton width="177" height="128" />
-      <View style={styles.input}>
-        <TextInput
-          placeholder="Search for artist.."
-          value={text}
-          onChangeText={(text: string) => setText(text)}
-        />
+      <View style={styles.search}>
+        <View style={styles.input}>
+          <TextInput
+            placeholder="Search for artist.."
+            value={text}
+            onChangeText={(text: string) => setText(text)}
+          />
+        </View>
+
+        <TouchableOpacity style={styles.imgContainer} onPress={pressHandler}>
+          <Image
+            style={styles.image}
+            source={require("../assets/search.png")}
+          />
+        </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={pressHandler}>
-        <AntDesign name="search1" size={24} color="black" />
-      </TouchableOpacity>
       <View style={{ width: "100%", padding: 15 }}>
         <SearchCard
           pic={require("../assets/image/profile-pic-nirvana.jpg")}
@@ -54,11 +66,12 @@ const SearchScreen = ({ ...props }: Props) => {
 
 const styles = StyleSheet.create({
   input: {
-    width: 350,
+    width: "80%",
     height: 50,
     backgroundColor: "#FFDFF7",
     margin: 10,
     padding: 10,
+    borderRadius: 5,
   },
   container: {
     flex: 1,
@@ -66,6 +79,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 50,
+  },
+
+  search: {
+    width: "100%",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  image: {
+    width: 20,
+    height: 20,
+  },
+  imgContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: "#FFDFF7",
+    elevation: 3,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

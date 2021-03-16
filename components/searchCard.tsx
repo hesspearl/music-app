@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: 10,
+    marginVertical: 20,
   },
   image: {
     width: 150,
