@@ -7,7 +7,7 @@ const tokenSecret = Config.ACCESS_TOKEN_SECRET;
 const consumerKey = Config.CONSUMER_KEY;
 const consumerSecret = Config.CONSUMER_SECRET;
 
-export const search = async (query: String): Promise<ObjectResult> => {
+export const search = (query: String): Promise<string | void> => {
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -23,15 +23,18 @@ export const search = async (query: String): Promise<ObjectResult> => {
     headers: myHeaders,
     redirect: "follow",
   };
-
-  const res = await fetch(
+  const searchResult = fetch(
     `https://api.discogs.com/database/search?q=${query}`,
     requestOptions
-  );
+  )
+    .then((response) => response.text())
+    .then((result) => {
+      console.log("result", result);
+      return result;
+    })
+    .catch((error) => console.log("error", error));
 
-  const result = await res.json();
-
-  return result;
+  return searchResult;
 };
 
 export const getArtistData = async (id: Number) => {

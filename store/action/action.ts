@@ -7,7 +7,7 @@ import {
   RELEASE_DATA,
 } from "./types";
 
-export const searchArtist = (artist: string): actionTypes => {
+export const searchArtist = (artist: ObjectResult): actionTypes => {
   return { type: SEARCH, artist };
 };
 

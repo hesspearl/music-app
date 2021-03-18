@@ -39,11 +39,11 @@ interface getReleaseDataTaskProps {
 }
 
 function* searchTsk({ artist }: searchTskProps): Generator<any> {
-  console.log(`artist: ${artist}`);
+  // console.log(`artist: ${artist}`);
   try {
     const task = yield call(search, artist);
     yield delay(400);
-    yield put(searchArtist(task));
+    //  yield put(searchArtist(task));
   } catch (e) {
     console.log(`saga error: ${e}`);
   }

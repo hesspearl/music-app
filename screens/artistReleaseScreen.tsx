@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import Texts from "../components/Texts";
-import { ProfileScreenNavigationProp } from "../index";
+import { ProfileScreenNavigationProp } from "../@types";
 interface Props {
   navigation: ProfileScreenNavigationProp;
 }

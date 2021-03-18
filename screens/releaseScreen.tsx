@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, ScrollView, StyleSheet } from "react-native";
 import SearchCard from "../components/searchCard";
-import { ProfileScreenNavigationProp } from "..";
+import { ProfileScreenNavigationProp } from "../@types";
 
 interface Props {
   navigation: ProfileScreenNavigationProp;
