@@ -18,7 +18,7 @@ const ReleaseScreen = (props: Props) => {
             txt_2="DGC,UME"
             txt_3="2013"
             color="card"
-            onPress={() => props.navigation.navigate("releaseReview")}
+            onPress={() => props.navigation.navigate("artistRelease")}
           />
 
           <SearchCard

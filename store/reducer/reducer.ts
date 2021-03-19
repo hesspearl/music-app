@@ -1,4 +1,4 @@
-import { actionTypes, GET_ARTIST, SEARCH } from "../action/types";
+import { actionTypes, GET_ARTIST, RECEIVE_SEARCH } from "../action/types";
 
 interface initial {
   artists: (
@@ -17,11 +17,12 @@ const initial: initial = {
   artists: [],
   labels: [],
   artist: [],
+  releases: [],
 };
 
 export default (state = initial, action: actionTypes): initial => {
   switch (action.type) {
-    case SEARCH:
+    case RECEIVE_SEARCH:
     // const artists = action.artist.results.map(
     //   (result: { type: "artist" }) => {
     //     if (result.type === "artist") {
@@ -41,7 +42,7 @@ export default (state = initial, action: actionTypes): initial => {
     case GET_ARTIST:
       return {
         ...state,
-        artist: action.artist,
+        artist: action.data,
       };
   }
 

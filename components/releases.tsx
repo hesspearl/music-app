@@ -4,15 +4,18 @@ import {
   Image,
   StyleSheet,
   ImageSourcePropType,
+  Text,
 } from "react-native";
 
 type props = {
   pic: ImageSourcePropType;
   onPress?: Function;
+  title: String;
 };
-const Releases = ({ pic, onPress }: props) => {
+const Releases = ({ pic, onPress, title }: props) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
+      <Text>{title}</Text>
       <Image style={styles.image} source={pic} />
     </TouchableOpacity>
   );

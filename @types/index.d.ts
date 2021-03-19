@@ -15,7 +15,7 @@ type BodyStackParamList = {
     };
   };
   release: undefined;
-  releaseReview: undefined;
+  artistRelease: undefined;
 };
 
 type ProfileScreenNavigationProp = StackNavigationProp<BodyStackParamList>;

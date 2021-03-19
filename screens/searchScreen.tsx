@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HeadPhone from "../assets/image/head-phone.svg";
 import PlayButton from "../assets/image/play-button.svg";
 import Search from "../assets/search.svg";
-import { searchArtist } from "../store/action/action";
+import { requestSearchArtist } from "../store/action/action";
 import { RootState } from "../store/reducer/root";
 import SearchCard from "../components/searchCard";
 import { ProfileScreenNavigationProp } from "../@types/index";
@@ -27,7 +27,7 @@ const SearchScreen = ({ ...props }: Props) => {
 
   const pressHandler = () => {
     console.log("click");
-    dispatch(searchArtist(text));
+    dispatch(requestSearchArtist(text));
   };
 
   return (
