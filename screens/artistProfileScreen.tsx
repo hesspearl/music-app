@@ -40,7 +40,7 @@ const artistReviewScreen = (props: Props) => {
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.imgContainer}>
-            {!artist ? (
+            {!state.artist.length ? (
               <Image
                 source={require("../assets/image/profile-pic-nirvana.jpg")}
                 style={styles.image}
@@ -51,17 +51,17 @@ const artistReviewScreen = (props: Props) => {
           </View>
 
           <View style={styles.textContainer}>
-            {!artist ? (
+            {!artist.length ? (
               <Texts style={styles.text}> Nirvana</Texts>
             ) : (
               <Texts style={styles.text}> {artist.name}</Texts>
             )}
-            {!artist ? (
+            {!artist.length ? (
               <Texts style={styles.text}> Rock Band</Texts>
             ) : (
               <Texts style={styles.text}> {artist.genere}</Texts>
             )}
-            {!artist ? (
+            {!artist.length ? (
               <Texts style={styles.text}> USA</Texts>
             ) : (
               <Texts style={styles.text}> {artist.style}</Texts>
@@ -69,7 +69,7 @@ const artistReviewScreen = (props: Props) => {
           </View>
         </View>
         <View style={styles.body}>
-          {!state.artist ? (
+          {!state.artist.length ? (
             <Text style={{ ...styles.paragraph, color: colors.text }}>
               Nirvana formed in 1987. Considered by many to be the leading
               lights of the Seattle grunge scene of the late 1980s/early
@@ -90,7 +90,7 @@ const artistReviewScreen = (props: Props) => {
       </View>
 
       <View style={styles.releases}>
-        {!state.releases ? (
+        {!state.artist.length ? (
           <Releases
             onPress={() => props.navigation.navigate("artistRelease")}
             title="Love Buzz b/w Big Cheese"

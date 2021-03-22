@@ -7,16 +7,18 @@ import {
   Text,
 } from "react-native";
 
-type props = {
+interface Props {
   pic: ImageSourcePropType;
   onPress?: Function;
-  title: String;
-};
-const Releases = ({ pic, onPress, title }: props) => {
+  title: string;
+}
+const Releases = ({ pic, onPress, title }: Props) => {
+  console.log(title);
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Text>{title}</Text>
-      <Image style={styles.image} source={pic} />
+      <Text style={styles.txt}>{title}</Text>
+
+      {/* <Image style={styles.image} source={pic} /> */}
     </TouchableOpacity>
   );
 };
@@ -34,6 +36,9 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
+  },
+  txt: {
+    color: "black",
   },
 });
 

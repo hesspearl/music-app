@@ -1,36 +1,38 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { Config } from "react-native-config";
+import {
+  ACCESS_TOKEN,
+  ACCESS_TOKEN_SECRET,
+  CONSUMER_KEY,
+  CONSUMER_SECRET,
+} from "@env";
 import { ObjectResult } from "../store/action/types";
 
-const token = Config.ACCESS_TOKEN;
-const tokenSecret = Config.ACCESS_TOKEN_SECRET;
-const consumerKey = Config.CONSUMER_KEY;
-const consumerSecret = Config.CONSUMER_SECRET;
-
 export const search = (query: String): Promise<string | void> => {
-  var myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `OAuth oauth_consumer_key="dJZgZiJRMZjGNayVBeUD",
-    oauth_token="lfIvAWBSBARGZWIanwjbxvkNqxhIrbicdvUQSglc",
-    oauth_signature_method="PLAINTEXT",oauth_timestamp="1615231142",
-    oauth_nonce="XUTShnXOEU5",oauth_version="1.0",
-    oauth_signature="nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26geDxRrskTRIkpDhCgwhvMnoSbPwwPyiQSaZYjaKX"`
-  );
+  console.log(ACCESS_TOKEN);
+  console.log(ACCESS_TOKEN_SECRET);
+  console.log(CONSUMER_KEY);
+  console.log(CONSUMER_SECRET);
 
-  var requestOptions: RequestInit = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
+  var config = {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
+  //  &oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=wpjERcOzxzvUuyjAcIoZGCsqqGkyFYZkaOtltVLg&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616416962&oauth_nonce=av9JqUVFELT&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26MlwreuUIQIWMCQAQXUqWWmJGNyLpefWJXdeqTINk`,
   const searchResult = fetch(
-    `https://api.discogs.com/database/search?q=${query}`,
-    requestOptions
+    `https://api.discogs.com/database/search?${query}
+     &oauth_consumer_key=${CONSUMER_KEY}&
+     oauth_token=${ACCESS_TOKEN}&
+     oauth_signature_method=PLAINTEXT
+     &oauth_version=1.0
+   &oauth_signature=${CONSUMER_SECRET}%26${ACCESS_TOKEN_SECRET}`,
+    config
   )
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => {
       console.log("result", result);
-      return result;
+      return result.results;
     })
     .catch((error) => console.log("error", error));
 

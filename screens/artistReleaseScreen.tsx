@@ -36,9 +36,21 @@ const ReleaseReviewScreen = (props: Props) => {
           </View>
 
           <View style={styles.textContainer}>
-            <Texts> Nirvana</Texts>
-            <Texts> Rock Band</Texts>
-            <Texts> USA</Texts>
+          {!state.artist.length ? (
+              <Texts style={styles.text}> Nirvana</Texts>
+            ) : (
+              <Texts style={styles.text}> {artist.name}</Texts>
+            )}
+            {!state.artist.length ? (
+              <Texts style={styles.text}> Rock Band</Texts>
+            ) : (
+              <Texts style={styles.text}> {artist.genere}</Texts>
+            )}
+            {!state.artist.length ? (
+              <Texts style={styles.text}> USA</Texts>
+            ) : (
+              <Texts style={styles.text}> {artist.style}</Texts>
+            )}
           </View>
         </View>
 
@@ -53,14 +65,14 @@ const ReleaseReviewScreen = (props: Props) => {
           >
             <Text style={styles.text}>Radio Friendly Unit Shifter</Text>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate("releaseReview")}
+              onPress={() => props.navigation.navigate("artistRelease")}
               style={styles.label}
             >
               <Text style={{ color: "#DCF0FF" }}>Label</Text>
             </TouchableOpacity>
             <Text style={styles.text}>Drain you</Text>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate("releaseReview")}
+              onPress={() => props.navigation.navigate("artistRelease")}
               style={styles.label}
             >
               <Text style={{ color: "#DCF0FF" }}>Label</Text>

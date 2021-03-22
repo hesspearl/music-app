@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HeadPhone from "../assets/image/head-phone.svg";
 import PlayButton from "../assets/image/play-button.svg";
 import Search from "../assets/search.svg";
-import { requestSearchArtist } from "../store/action/action";
+import { requestSearchAction } from "../store/action/action";
 import { RootState } from "../store/reducer/root";
 import SearchCard from "../components/searchCard";
 import { ProfileScreenNavigationProp } from "../@types/index";
@@ -27,7 +27,7 @@ const SearchScreen = ({ ...props }: Props) => {
 
   const pressHandler = () => {
     console.log("click");
-    dispatch(requestSearchArtist(text));
+    dispatch(requestSearchAction(text));
   };
 
   return (
@@ -50,7 +50,7 @@ const SearchScreen = ({ ...props }: Props) => {
 
       <View style={{ flex: 1, width: "100%", padding: 15 }}>
         <ScrollView>
-          {!state.artist.length ? (
+          {!state.artists.length ? (
             <SearchCard
               id={1}
               pic={require("../assets/image/profile-pic-nirvana.jpg")}
@@ -65,12 +65,12 @@ const SearchScreen = ({ ...props }: Props) => {
               }
             />
           ) : (
-            state.artist.map((artist) => (
+            state.artists.map((artist) => (
               <SearchCard
                 id={artist.id}
-                pic={artist.thumb}
-                txt_1={artist.name}
-                txt_2={artist.genere}
+                pic={{ uri: artist.thumb }}
+                txt_1={artist.title}
+                txt_2={artist.genre}
                 txt_3={artist.style}
                 color="primary"
                 onPress={() =>

@@ -13,10 +13,10 @@ import {
   search,
 } from "../../service/api";
 import {
- receiveSearchAction,
- receiveArtistAction,
- receiveReleaseAction,
- receiveReleaseDataAction,
+  receiveSearchAction,
+  receiveArtistAction,
+  receiveReleaseAction,
+  receiveReleaseDataAction,
 } from "../action/action";
 import {
   actionTypes,
@@ -55,7 +55,7 @@ function* searchTsk({
   try {
     const task = yield call(search, artist);
     yield delay(400);
-     // yield put(receiveSearchAction(task));
+    // yield put(receiveSearchAction(task));
   } catch (e) {
     console.log(`saga error: ${e}`);
   }

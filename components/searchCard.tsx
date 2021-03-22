@@ -13,7 +13,7 @@ interface Props {
   onPress: () => void;
   color: "primary" | "card";
 
-  pic: ImageSourcePropType;
+  pic: ImageSourcePropType | { uri: ImageSourcePropType };
   id: number;
   txt_1: String;
   txt_2: String;

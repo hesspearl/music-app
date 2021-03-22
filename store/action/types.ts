@@ -20,7 +20,7 @@ interface receiveAction {
     | typeof RECEIVE_ARTIST
     | typeof RECEIVE_RELEASE
     | typeof RECEIVE_RELEASE_DATA;
-  data: ObjectResult;
+  data: [];
 }
 
 interface requestStringAction {
