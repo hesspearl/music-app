@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import searchScreen from "../screens/searchScreen";
 import artistProfileScreen from "../screens/artistProfileScreen";
-import ReleaseScreen from "../screens/releaseScreen";
-import ArtistReleaseScreen from "../screens/artistReleaseScreen";
+import artistReleasesScreen from "../screens/artistReleasesScreen";
+import releaseScreen from "../screens/releaseScreen";
 
 type BodyStackParamList = {
   search: undefined;
@@ -11,7 +11,7 @@ type BodyStackParamList = {
     id: number;
   };
   release: undefined;
-  artistRelease: undefined;
+  artistReleases: undefined;
 };
 const BodyStack = createStackNavigator<BodyStackParamList>();
 
@@ -24,8 +24,11 @@ export const ScreenNavigator = () => {
         initialParams={{ id: 125246 }}
         component={artistProfileScreen}
       />
-      <BodyStack.Screen name="release" component={ReleaseScreen} />
-      <BodyStack.Screen name="artistRelease" component={ArtistReleaseScreen} />
+      <BodyStack.Screen
+        name="artistReleases"
+        component={artistReleasesScreen}
+      />
+      <BodyStack.Screen name="release" component={releaseScreen} />
     </BodyStack.Navigator>
   );
 };
