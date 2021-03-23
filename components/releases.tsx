@@ -13,7 +13,6 @@ interface Props {
   title: string;
 }
 const Releases = ({ pic, onPress, title }: Props) => {
-  console.log(title);
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Text style={styles.txt}>{title}</Text>
@@ -26,19 +25,22 @@ const Releases = ({ pic, onPress, title }: Props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#DCF0FF",
-    width: 110,
-    height: 110,
+    width: 100,
+    height: 100,
     borderRadius: 5,
     elevation: 5,
     padding: 5,
     margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
     width: 100,
     height: 100,
   },
   txt: {
-    color: "black",
+    color: "#D392FC",
+    fontWeight: "bold",
   },
 });
 

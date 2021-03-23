@@ -14,26 +14,17 @@ interface Props {
   color: "primary" | "card";
 
   pic: ImageSourcePropType | { uri: ImageSourcePropType };
-  id: number;
+
   txt_1: String;
   txt_2: String;
   txt_3: String;
 }
 
-const SearchCard = ({
-  onPress,
-  color,
-  txt_1,
-  txt_2,
-  txt_3,
-  pic,
-  id,
-}: Props) => {
+const SearchCard = ({ onPress, color, txt_1, txt_2, txt_3, pic }: Props) => {
   const { colors } = useTheme();
 
   return (
     <TouchableOpacity
-      key={id}
       style={{ ...styles.container, backgroundColor: colors[color] }}
       onPress={onPress}
     >
