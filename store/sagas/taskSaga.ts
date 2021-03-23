@@ -15,20 +15,20 @@ import {
 import {
   receiveSearchAction,
   receiveArtistAction,
-  receiveReleaseAction,
+  receiveReleasesAction,
   receiveReleaseDataAction,
 } from "../action/action";
 import {
   actionTypes,
   ObjectResult,
   REQUEST_RELEASE_DATA,
-  REQUEST_RELEASE,
+  REQUEST_RELEASES,
   REQUEST_ARTIST,
   REQUEST_SEARCH,
 } from "../action/types";
 
 interface searchTskProps {
-  artist: string;
+  data: String;
   type: string;
 }
 
@@ -48,22 +48,18 @@ interface getReleaseDataTaskProps {
   type: string;
 }
 
-function* searchTsk({
-  artist,
-}: searchTskProps): Generator<any, any, ObjectResult> {
-  // console.log(`artist: ${artist}`);
+function* searchTsk({ data }: searchTskProps): Generator<any, any, []> {
+  console.log(`artist: ${data}`);
   try {
-    const task = yield call(search, artist);
+    const task = yield call(search, data);
     yield delay(400);
-    // yield put(receiveSearchAction(task));
+    yield put(receiveSearchAction(task));
   } catch (e) {
     console.log(`saga error: ${e}`);
   }
 }
 
-function* getArtistTask({
-  id,
-}: getArtistTaskProps): Generator<any, any, ObjectResult> {
+function* getArtistTask({ id }: getArtistTaskProps): Generator<any, any, {}> {
   try {
     const task = yield call(getArtistData, id);
     yield put(receiveArtistAction(task));
@@ -72,13 +68,13 @@ function* getArtistTask({
   }
 }
 
-function* getReleaseTask({
+function* getReleasesTask({
   id,
   typeOfArtist,
-}: getReleaseTaskProps): Generator<any, any, ObjectResult> {
+}: getReleaseTaskProps): Generator<any, any, []> {
   try {
     const task = yield call(getReleases, id, typeOfArtist);
-    yield put(receiveReleaseAction(task));
+    yield put(receiveReleasesAction(task));
   } catch (e) {
     console.log(`saga error: ${e}`);
   }
@@ -86,7 +82,7 @@ function* getReleaseTask({
 
 function* getReleaseDataTask({
   id,
-}: getReleaseDataTaskProps): Generator<any, any, ObjectResult> {
+}: getReleaseDataTaskProps): Generator<any, any, {}> {
   try {
     const task = yield call(getReleaseData, id);
     yield put(receiveReleaseDataAction(task));
@@ -100,7 +96,7 @@ function* getReleaseDataTask({
 function* watcherSaga() {
   yield takeLatest(REQUEST_SEARCH, searchTsk);
   yield takeEvery(REQUEST_ARTIST, getArtistTask);
-  yield takeEvery(REQUEST_RELEASE, getReleaseTask);
+  yield takeEvery(REQUEST_RELEASES, getReleasesTask);
   yield takeEvery(REQUEST_RELEASE_DATA, getReleaseDataTask);
 }
 

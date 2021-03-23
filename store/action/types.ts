@@ -4,8 +4,8 @@ export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
 export const REQUEST_ARTIST = "REQUEST_ARTIST";
 export const RECEIVE_ARTIST = "RECEIVE_ARTIST";
 
-export const REQUEST_RELEASE = "REQUEST_RELEASE";
-export const RECEIVE_RELEASE = "RECEIVE_RELEASE";
+export const REQUEST_RELEASES = "REQUEST_RELEASES";
+export const RECEIVE_RELEASES = "RECEIVE_RELEASES";
 
 export const REQUEST_RELEASE_DATA = "REQUEST_RELEASE_DATA";
 export const RECEIVE_RELEASE_DATA = "RECEIVE_RELEASE_DATA";
@@ -15,12 +15,13 @@ export type ObjectResult = {
 };
 
 interface receiveAction {
-  type:
-    | typeof RECEIVE_SEARCH
-    | typeof RECEIVE_ARTIST
-    | typeof RECEIVE_RELEASE
-    | typeof RECEIVE_RELEASE_DATA;
+  type: typeof RECEIVE_SEARCH | typeof RECEIVE_RELEASES;
+
   data: [];
+}
+interface receiveObjectAction {
+  type: typeof RECEIVE_RELEASE_DATA | typeof RECEIVE_ARTIST;
+  data: {};
 }
 
 interface requestStringAction {
@@ -31,10 +32,14 @@ interface requestStringAction {
 interface requestIDAction {
   type:
     | typeof REQUEST_ARTIST
-    | typeof REQUEST_RELEASE
+    | typeof REQUEST_RELEASES
     | typeof REQUEST_RELEASE_DATA;
   id: Number;
   typeOfArtist?: string;
 }
 
-export type actionTypes = requestStringAction | receiveAction | requestIDAction;
+export type actionTypes =
+  | requestStringAction
+  | requestIDAction
+  | receiveAction
+  | receiveObjectAction;

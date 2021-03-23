@@ -1,50 +1,76 @@
-import { actionTypes, GET_ARTIST, RECEIVE_SEARCH } from "../action/types";
+import {
+  actionTypes,
+  RECEIVE_RELEASES,
+  RECEIVE_ARTIST,
+  RECEIVE_SEARCH,
+  RECEIVE_RELEASE_DATA,
+} from "../action/types";
 import { ImageSourcePropType } from "react-native";
 
 interface initial {
   artists: {
-    type: "artist";
+    type: String;
     id: number;
-    thumb: ImageSourcePropType;
+    cover_image: ImageSourcePropType;
     title: String;
     genre: String;
     style: String;
   }[];
   labels: ({ type: "label" } | undefined)[];
-  artist: [];
+  artist: {};
+  releases: [];
+  release: {};
 }
 
 const initial: initial = {
   artists: [],
   labels: [],
-  artist: [],
+  artist: {},
   releases: [],
+  release: {},
 };
 
 export default (state = initial, action: actionTypes): initial => {
   switch (action.type) {
+    //search array objects
     case RECEIVE_SEARCH:
-      const artists = action.data?.map((result: { type: "artist" }) => {
-        if (result.type === "artist") {
-          return result;
-        }
-      });
-      const labels = action.data?.map((result: { type: "label" }) => {
+      if (!action.data.length) {
+        return state;
+      }
+      const artists = action.data
+        .filter((result) => result.type === "artist")
+        .map((result) => result);
+      const labels = action.data.map((result: { type: "label" }) => {
         if (result.type === "label") {
           return result;
         }
       });
 
-    // return {
-    //   ...state,
-    //   artists: artists,
-    //   labels: labels,
-    // };
+      return {
+        ...state,
+        artists: artists,
+        labels: labels,
+      };
 
-    case GET_ARTIST:
+    //artist profile data
+    case RECEIVE_ARTIST:
       return {
         ...state,
         artist: action.data,
+      };
+
+    //artist releases array
+    case RECEIVE_RELEASES:
+      return {
+        ...state,
+        releases: action.data,
+      };
+
+    //a release data
+    case RECEIVE_RELEASE_DATA:
+      return {
+        ...state,
+        release: action.data,
       };
   }
 
