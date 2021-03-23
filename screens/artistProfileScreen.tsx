@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
 import Releases from "../components/releases";
@@ -9,7 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/reducer/root";
 import {
   requestArtistAction,
-  requestReleaseAction,
+  requestReleasesAction,
 } from "../store/action/action";
 
 interface Props {
@@ -21,47 +28,49 @@ const artistReviewScreen = (props: Props) => {
   const { id } = props.route.params;
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.release);
-  const [artist, setArtist] = useState([]);
+  const [artist, setArtist] = useState({});
 
-  // useEffect(() => {
-  // dispatch(requestArtistAction(id))
-  // dispatch(requestReleaseAction(id, "artists"))
-
-  // }, [id])
+  useEffect(() => {
+    dispatch(requestArtistAction(id));
+    dispatch(requestReleasesAction(id, "artists"));
+    getArtistData();
+  }, [id]);
 
   const getArtistData = () => {
     const artist = state.artists.filter((artist) => artist.id === id);
 
-    setArtist(artist);
+    setArtist({ ...artist[0] });
   };
+
+  const mainAlbums = state.releases.slice(0, 3);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.imgContainer}>
-            {!state.artist.length ? (
+            {!state.artist ? (
               <Image
                 source={require("../assets/image/profile-pic-nirvana.jpg")}
                 style={styles.image}
               />
             ) : (
-              <Image source={artist.thumb} style={styles.image} />
+              <Image source={{ uri: artist.thumb }} style={styles.image} />
             )}
           </View>
 
           <View style={styles.textContainer}>
-            {!artist.length ? (
+            {!state.artist ? (
               <Texts style={styles.text}> Nirvana</Texts>
             ) : (
-              <Texts style={styles.text}> {artist.name}</Texts>
+              <Texts style={styles.text}> {artist.title}</Texts>
             )}
-            {!artist.length ? (
+            {!state.artist ? (
               <Texts style={styles.text}> Rock Band</Texts>
             ) : (
               <Texts style={styles.text}> {artist.genere}</Texts>
             )}
-            {!artist.length ? (
+            {!state.artist ? (
               <Texts style={styles.text}> USA</Texts>
             ) : (
               <Texts style={styles.text}> {artist.style}</Texts>
@@ -69,7 +78,7 @@ const artistReviewScreen = (props: Props) => {
           </View>
         </View>
         <View style={styles.body}>
-          {!state.artist.length ? (
+          {!state.artist ? (
             <Text style={{ ...styles.paragraph, color: colors.text }}>
               Nirvana formed in 1987. Considered by many to be the leading
               lights of the Seattle grunge scene of the late 1980s/early
@@ -78,9 +87,11 @@ const artistReviewScreen = (props: Props) => {
               aesthetic to a growing-stale rock scene.
             </Text>
           ) : (
-            <Text style={{ ...styles.paragraph, color: colors.text }}>
-              {state.artist.profile}
-            </Text>
+            <ScrollView style={styles.paragraphContainer}>
+              <Text style={{ ...styles.paragraph, color: colors.text }}>
+                {state.artist.profile}
+              </Text>
+            </ScrollView>
           )}
         </View>
       </View>
@@ -90,24 +101,27 @@ const artistReviewScreen = (props: Props) => {
       </View>
 
       <View style={styles.releases}>
-        {!state.artist.length ? (
+        {!state.releases && (
           <Releases
-            onPress={() => props.navigation.navigate("artistRelease")}
+            onPress={() => props.navigation.navigate("release")}
             title="Love Buzz b/w Big Cheese"
             pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
           />
-        ) : (
-          <Releases
-            onPress={() => props.navigation.navigate("artistRelease")}
-            title={state.releases.title}
-            pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
-          />
         )}
+        {mainAlbums.map((release) => (
+          <View key={release.id}>
+            <Releases
+              onPress={() => props.navigation.navigate("release")}
+              title={release.title}
+              pic={{ uri: release.thumb }}
+            />
+          </View>
+        ))}
       </View>
 
       <TouchableOpacity
         style={{ ...styles.titles, alignItems: "flex-end" }}
-        onPress={() => props.navigation.navigate("release")}
+        onPress={() => props.navigation.navigate("artistReleases")}
       >
         <Text style={{ ...styles.text, color: colors.card }}>
           {" "}
@@ -161,6 +175,10 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 17,
+  },
+
+  paragraphContainer: {
+    height: "60%",
   },
   releases: {
     flexDirection: "row",

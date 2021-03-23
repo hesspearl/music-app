@@ -21,12 +21,11 @@ interface Props {
 }
 
 const SearchScreen = ({ ...props }: Props) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState<String>("");
   const state = useSelector((state: RootState) => state.release);
   const dispatch = useDispatch();
 
   const pressHandler = () => {
-    console.log("click");
     dispatch(requestSearchAction(text));
   };
 
@@ -50,9 +49,8 @@ const SearchScreen = ({ ...props }: Props) => {
 
       <View style={{ flex: 1, width: "100%", padding: 15 }}>
         <ScrollView>
-          {!state.artists.length ? (
+          {/* {!state.artists.length ? (
             <SearchCard
-              id={1}
               pic={require("../assets/image/profile-pic-nirvana.jpg")}
               txt_1="Nirvana"
               txt_2="Rock"
@@ -63,12 +61,11 @@ const SearchScreen = ({ ...props }: Props) => {
                   initialParams: { id: 1 },
                 })
               }
-            />
-          ) : (
-            state.artists.map((artist) => (
+            /> */}
+          {state.artists.map((artist) => (
+            <View key={artist.id}>
               <SearchCard
-                id={artist.id}
-                pic={{ uri: artist.thumb }}
+                pic={{ uri: artist.cover_image }}
                 txt_1={artist.title}
                 txt_2={artist.genre}
                 txt_3={artist.style}
@@ -79,8 +76,8 @@ const SearchScreen = ({ ...props }: Props) => {
                   })
                 }
               />
-            ))
-          )}
+            </View>
+          ))}
         </ScrollView>
       </View>
     </View>
