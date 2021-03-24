@@ -16,7 +16,7 @@ export const search = (query: String): Promise<string | void> => {
   };
   //  &oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=wpjERcOzxzvUuyjAcIoZGCsqqGkyFYZkaOtltVLg&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616416962&oauth_nonce=av9JqUVFELT&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26MlwreuUIQIWMCQAQXUqWWmJGNyLpefWJXdeqTINk`,
   const searchResult = fetch(
-    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=QoJdXtRYKabmtHoKZdpCKAKeEVFRtWTCBFlUKqsO&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616522267&oauth_nonce=QsLHdP35cfl&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26LEcBQVBQzkHxeZtSDfRbbDBkMTOfxfsCOAiYtAdS`,
+    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=AVfOIuYYlKSjUjgKYhLGencJZSEQsXceZOZkqWAY&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616587877&oauth_nonce=AArHrNLDgPz&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26SZjlCtnXZVEcGeXiDNdazPbMxNMBezHvnsnVAvCi`,
 
     //    &oauth_consumer_key=${CONSUMER_KEY}&
     //    oauth_token=${ACCESS_TOKEN}&
@@ -50,6 +50,7 @@ export const getReleases = async (id: Number, type: String) => {
 };
 
 export const getReleaseData = async (id: Number) => {
+  console.log(id);
   return fetch(`https://api.discogs.com/masters/${id}`)
     .then((response) => response.json())
     .then((result) => result)

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
@@ -12,20 +12,29 @@ import Texts from "../components/Texts";
 import { ProfileScreenNavigationProp, ProfileScreenRouteProp } from "../@types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/reducer/root";
-import { requestReleaseDataAction } from "../store/action/action";
+import { requestReleasesAction } from "../store/action/action";
+import SearchCard from "../components/searchCard";
 
 interface Props {
   route: ProfileScreenRouteProp;
 }
 
-const ReleaseReviewScreen = (props: Props) => {
+const LabelReleasesScreen = (props: Props) => {
   const { id } = props.route.params;
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.release);
+  const [label, setLabel] = useState({});
 
   useEffect(() => {
-    dispatch(requestReleaseDataAction(id));
+    dispatch(requestReleasesAction(id, "labels"));
+    getLabelData();
   }, [id]);
+
+  const getLabelData = () => {
+    const label = state.labels.filter((label) => label.id === id);
+
+    setLabel({ ...label[0] });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,24 +52,12 @@ const ReleaseReviewScreen = (props: Props) => {
           </View>
 
           <View style={styles.textContainer}>
-            <Texts style={styles.text}>
-              {" "}
-              Album name : {state.release.title}
-            </Texts>
-
-            <Texts style={styles.text}>
-              Genre : {state.release.genres ? state.release.genres[0] : null}
-            </Texts>
-
-            <Texts style={styles.text}>
-              Music Style :{" "}
-              {state.release.styles ? state.release.styles[0] : null}
-            </Texts>
+            <Texts style={styles.text}> label name : {label.title}</Texts>
           </View>
         </View>
 
         <View style={styles.titles}>
-          <Text style={styles.text}> Track List</Text>
+          <Text style={styles.text}> Releases List</Text>
         </View>
         <View style={styles.list}>
           <ScrollView
@@ -68,9 +65,13 @@ const ReleaseReviewScreen = (props: Props) => {
               flex: 1,
             }}
           >
-            {state.release.tracklist?.map((track, index) => (
-              <View key={index}>
-                <Text style={styles.text}>{track.title}</Text>
+            {state.releases.map((release) => (
+              <View key={release.id} style={styles.cardContainer}>
+                <View>
+                  <Text style={styles.text}>{release.title}</Text>
+                  <Text style={styles.text}>{release.artist}</Text>
+                  <Text style={styles.text}>{release.format}</Text>
+                </View>
               </View>
             ))}
 
@@ -128,10 +129,11 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: "#FFDFF7",
     width: "90%",
-    height: "60%",
+    height: "80%",
     borderRadius: 10,
     padding: 20,
     elevation: 10,
+    marginTop: 10,
   },
   titles: {
     width: "100%",
@@ -144,6 +146,17 @@ const styles = StyleSheet.create({
     color: "#D392FC",
     marginBottom: 5,
   },
+  cardContainer: {
+    width: "100%",
+    height: 100,
+    borderRadius: 10,
+    backgroundColor: "#DCF0FF",
+    padding: 10,
+    alignItems: "center",
+    flexDirection: "row",
+    marginVertical: 10,
+    elevation: 10,
+  },
 });
 
-export default ReleaseReviewScreen;
+export default LabelReleasesScreen;

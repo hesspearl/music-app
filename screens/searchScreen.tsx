@@ -3,6 +3,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  Text,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
@@ -22,6 +23,8 @@ interface Props {
 
 const SearchScreen = ({ ...props }: Props) => {
   const [text, setText] = useState<String>("");
+  const [label, setLabel] = useState<Boolean>(false);
+
   const state = useSelector((state: RootState) => state.release);
   const dispatch = useDispatch();
 
@@ -46,7 +49,12 @@ const SearchScreen = ({ ...props }: Props) => {
           <Search width="25" height="25" />
         </TouchableOpacity>
       </View>
-
+      <TouchableOpacity
+        style={{ ...styles.label, elevation: label ? 0 : 10 }}
+        onPress={() => setLabel(!label)}
+      >
+        <Text style={{ color: "#DEAAFF", fontWeight: "bold" }}>Label</Text>
+      </TouchableOpacity>
       <View style={{ flex: 1, width: "100%", padding: 15 }}>
         <ScrollView>
           {/* {!state.artists.length ? (
@@ -62,22 +70,42 @@ const SearchScreen = ({ ...props }: Props) => {
                 })
               }
             /> */}
-          {state.artists.map((artist) => (
-            <View key={artist.id}>
-              <SearchCard
-                pic={{ uri: artist.cover_image }}
-                txt_1={artist.title}
-                txt_2={artist.genre}
-                txt_3={artist.style}
-                color="primary"
-                onPress={() =>
-                  props.navigation.navigate("artistProfile", {
-                    initialParams: { id: artist.id },
-                  })
-                }
-              />
-            </View>
-          ))}
+          {label
+            ? state.labels.map((label) => (
+                <View key={label.id}>
+                  <SearchCard
+                    pic={{
+                      uri:
+                        "https://cdn.iconscout.com/icon/free/png-256/queue-music-1779820-1513985.png ",
+                    }}
+                    txt_1={label.title}
+                    txt_2={label.type}
+                    txt_3={label.style}
+                    color="primary"
+                    onPress={() =>
+                      props.navigation.navigate("label", {
+                        id: label.id,
+                      })
+                    }
+                  />
+                </View>
+              ))
+            : state.artists.map((artist) => (
+                <View key={artist.id}>
+                  <SearchCard
+                    pic={{ uri: artist.cover_image }}
+                    txt_1={artist.title}
+                    txt_2={artist.type}
+                    txt_3={artist.style}
+                    color="primary"
+                    onPress={() =>
+                      props.navigation.navigate("artistProfile", {
+                        id: artist.id,
+                      })
+                    }
+                  />
+                </View>
+              ))}
         </ScrollView>
       </View>
     </View>
@@ -114,6 +142,15 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
+  },
+  label: {
+    width: 60,
+    height: 25,
+    borderRadius: 20,
+    backgroundColor: "#FFDFF7",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });
 

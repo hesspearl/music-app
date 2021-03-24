@@ -16,7 +16,14 @@ interface initial {
     genre: String;
     style: String;
   }[];
-  labels: ({ type: "label" } | undefined)[];
+  labels: {
+    type: String;
+    id: number;
+    cover_image: ImageSourcePropType;
+    title: String;
+    genre: String;
+    style: String;
+  }[];
   artist: {};
   releases: [];
   release: {};
@@ -40,11 +47,9 @@ export default (state = initial, action: actionTypes): initial => {
       const artists = action.data
         .filter((result) => result.type === "artist")
         .map((result) => result);
-      const labels = action.data.map((result: { type: "label" }) => {
-        if (result.type === "label") {
-          return result;
-        }
-      });
+      const labels = action.data
+        .filter((result) => result.type === "label")
+        .map((result) => result);
 
       return {
         ...state,

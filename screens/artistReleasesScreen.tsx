@@ -17,23 +17,19 @@ const ReleaseScreen = (props: Props) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <ScrollView>
-          <SearchCard
-            pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
-            txt_1="Live and Loud"
-            txt_2="DGC,UME"
-            txt_3="2013"
-            color="card"
-            onPress={() => props.navigation.navigate("release")}
-          />
           {state.map((release) => (
             <View key={release.id}>
               <SearchCard
-                pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
+                pic={require("../assets/image/album.png")}
                 txt_1={release.title}
                 txt_2={release.label}
                 txt_3={release.year}
                 color="card"
-                onPress={() => props.navigation.navigate("release")}
+                onPress={() =>
+                  props.navigation.navigate("release", {
+                    id: release.id,
+                  })
+                }
               />
             </View>
           ))}

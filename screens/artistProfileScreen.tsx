@@ -111,7 +111,9 @@ const artistReviewScreen = (props: Props) => {
         {mainAlbums.map((release) => (
           <View key={release.id}>
             <Releases
-              onPress={() => props.navigation.navigate("release")}
+              onPress={() =>
+                props.navigation.navigate("release", { id: release.id })
+              }
               title={release.title}
               pic={{ uri: release.thumb }}
             />

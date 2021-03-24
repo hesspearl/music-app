@@ -10,12 +10,15 @@ import { StackNavigationProp } from "@react-navigation/stack";
 type BodyStackParamList = {
   search: undefined;
   artistProfile: {
-    initialParams: {
-      id: number;
-    };
+    id: number;
   };
-  release: undefined;
+  release: {
+    id: number;
+  };
   artistReleases: undefined;
+  label: {
+    id: Number;
+  };
 };
 
 type ProfileScreenNavigationProp = StackNavigationProp<BodyStackParamList>;
