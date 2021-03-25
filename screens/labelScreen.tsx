@@ -23,7 +23,7 @@ const LabelReleasesScreen = (props: Props) => {
   const { id } = props.route.params;
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.release);
-  const [label, setLabel] = useState({});
+  const [label, setLabel] = useState<{ title: String }>({ title: "" });
 
   useEffect(() => {
     dispatch(requestReleasesAction(id, "labels"));
@@ -74,15 +74,6 @@ const LabelReleasesScreen = (props: Props) => {
                 </View>
               </View>
             ))}
-
-            {/* <TouchableOpacity style={styles.label}>
-              <Text style={{ color: "#DCF0FF" }}>Label</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>Drain you</Text>
-            <TouchableOpacity style={styles.label}>
-              <Text style={{ color: "#DCF0FF" }}>Label</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>Breed</Text> */}
           </ScrollView>
         </View>
       </View>

@@ -1,6 +1,5 @@
 import {
   actionTypes,
-  ObjectResult,
   RECEIVE_ARTIST,
   REQUEST_ARTIST,
   RECEIVE_SEARCH,

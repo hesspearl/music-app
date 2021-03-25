@@ -1,11 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { View, Text, StyleSheet, TextStyle } from "react-native";
 
 interface Props {
-  children: String;
   style?: TextStyle;
 }
-const Texts = ({ children, style }: Props) => {
+const Texts: FC<Props> = ({ children, style }) => {
   return <Text style={{ ...style, ...styles.txt }}>{children}</Text>;
 };
 

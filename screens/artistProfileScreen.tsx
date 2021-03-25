@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  ImageSourcePropType,
 } from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
@@ -23,12 +24,24 @@ interface Props {
   route: ProfileScreenRouteProp;
   navigation: ProfileScreenNavigationProp;
 }
+
+interface artistTypes {
+  thumb: string;
+  title: String;
+  genre: String;
+  style: String;
+}
 const artistReviewScreen = (props: Props) => {
   const { colors } = useTheme();
   const { id } = props.route.params;
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.release);
-  const [artist, setArtist] = useState({});
+  const [artist, setArtist] = useState<artistTypes>({
+    thumb: "",
+    title: "",
+    genre: "",
+    style: "",
+  });
 
   useEffect(() => {
     dispatch(requestArtistAction(id));
@@ -37,9 +50,10 @@ const artistReviewScreen = (props: Props) => {
   }, [id]);
 
   const getArtistData = () => {
-    const artist = state.artists.filter((artist) => artist.id === id);
+    const data = state.artists.filter((artist) => artist.id === id);
+    const artist = { ...data[0] };
 
-    setArtist({ ...artist[0] });
+    setArtist(artist);
   };
 
   const mainAlbums = state.releases.slice(0, 3);
@@ -60,39 +74,19 @@ const artistReviewScreen = (props: Props) => {
           </View>
 
           <View style={styles.textContainer}>
-            {!state.artist ? (
-              <Texts style={styles.text}> Nirvana</Texts>
-            ) : (
-              <Texts style={styles.text}> {artist.title}</Texts>
-            )}
-            {!state.artist ? (
-              <Texts style={styles.text}> Rock Band</Texts>
-            ) : (
-              <Texts style={styles.text}> {artist.genere}</Texts>
-            )}
-            {!state.artist ? (
-              <Texts style={styles.text}> USA</Texts>
-            ) : (
-              <Texts style={styles.text}> {artist.style}</Texts>
-            )}
+            <Texts style={styles.text}> {artist.title}</Texts>
+
+            <Texts style={styles.text}> {artist.genre}</Texts>
+
+            <Texts style={styles.text}> {artist.style}</Texts>
           </View>
         </View>
         <View style={styles.body}>
-          {!state.artist ? (
+          <ScrollView style={styles.paragraphContainer}>
             <Text style={{ ...styles.paragraph, color: colors.text }}>
-              Nirvana formed in 1987. Considered by many to be the leading
-              lights of the Seattle grunge scene of the late 1980s/early
-              1990s.and perhaps the most influential rock band of Generations X
-              & Y, Nirvana was a powerful trio of musicians who brought a unique
-              aesthetic to a growing-stale rock scene.
+              {state.artist.profile}
             </Text>
-          ) : (
-            <ScrollView style={styles.paragraphContainer}>
-              <Text style={{ ...styles.paragraph, color: colors.text }}>
-                {state.artist.profile}
-              </Text>
-            </ScrollView>
-          )}
+          </ScrollView>
         </View>
       </View>
       {/* <Text style={{ ...styles.text, color: colors.card }}> Members</Text> */}
@@ -101,13 +95,6 @@ const artistReviewScreen = (props: Props) => {
       </View>
 
       <View style={styles.releases}>
-        {!state.releases && (
-          <Releases
-            onPress={() => props.navigation.navigate("release")}
-            title="Love Buzz b/w Big Cheese"
-            pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
-          />
-        )}
         {mainAlbums.map((release) => (
           <View key={release.id}>
             <Releases

@@ -22,7 +22,7 @@ interface Props {
 }
 
 const SearchScreen = ({ ...props }: Props) => {
-  const [text, setText] = useState<String>("");
+  const [text, setText] = useState<string>("");
   const [label, setLabel] = useState<Boolean>(false);
 
   const state = useSelector((state: RootState) => state.release);
@@ -57,19 +57,6 @@ const SearchScreen = ({ ...props }: Props) => {
       </TouchableOpacity>
       <View style={{ flex: 1, width: "100%", padding: 15 }}>
         <ScrollView>
-          {/* {!state.artists.length ? (
-            <SearchCard
-              pic={require("../assets/image/profile-pic-nirvana.jpg")}
-              txt_1="Nirvana"
-              txt_2="Rock"
-              txt_3="Band"
-              color="primary"
-              onPress={() =>
-                props.navigation.navigate("artistProfile", {
-                  initialParams: { id: 1 },
-                })
-              }
-            /> */}
           {label
             ? state.labels.map((label) => (
                 <View key={label.id}>
@@ -93,7 +80,7 @@ const SearchScreen = ({ ...props }: Props) => {
             : state.artists.map((artist) => (
                 <View key={artist.id}>
                   <SearchCard
-                    pic={{ uri: artist.cover_image }}
+                    pic={artist.cover_image}
                     txt_1={artist.title}
                     txt_2={artist.type}
                     txt_3={artist.style}

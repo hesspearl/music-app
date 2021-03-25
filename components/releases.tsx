@@ -5,11 +5,12 @@ import {
   StyleSheet,
   ImageSourcePropType,
   Text,
+  GestureResponderEvent,
 } from "react-native";
 
 interface Props {
   pic: ImageSourcePropType;
-  onPress?: Function;
+  onPress: (event: GestureResponderEvent) => void;
   title: string;
 }
 const Releases = ({ pic, onPress, title }: Props) => {

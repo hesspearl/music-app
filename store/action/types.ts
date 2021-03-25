@@ -21,9 +21,14 @@ interface receiveAction {
 }
 interface receiveObjectAction {
   type: typeof RECEIVE_RELEASE_DATA | typeof RECEIVE_ARTIST;
-  data: {};
+  data: {
+    title: String;
+    genres: String;
+    styles: String;
+    tracklist: { title: string }[];
+    profile: String;
+  };
 }
-
 interface requestStringAction {
   type: typeof REQUEST_SEARCH;
   data: String;

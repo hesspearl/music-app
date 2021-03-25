@@ -14,9 +14,9 @@ export const search = (query: String): Promise<string | void> => {
       "Content-Type": "application/json",
     },
   };
-  //  &oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=wpjERcOzxzvUuyjAcIoZGCsqqGkyFYZkaOtltVLg&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616416962&oauth_nonce=av9JqUVFELT&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26MlwreuUIQIWMCQAQXUqWWmJGNyLpefWJXdeqTINk`,
+
   const searchResult = fetch(
-    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=AVfOIuYYlKSjUjgKYhLGencJZSEQsXceZOZkqWAY&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616587877&oauth_nonce=AArHrNLDgPz&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26SZjlCtnXZVEcGeXiDNdazPbMxNMBezHvnsnVAvCi`,
+    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=KCMMmpOGDFMnKFFhvlVhjFiTAGwePCmxSvEiTTyl&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616596122&oauth_nonce=6o2JV7f8PR0&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26NiBdttZojcETaMxFdScHGWeKLKEPnwXHQZbJUYpr`,
 
     //    &oauth_consumer_key=${CONSUMER_KEY}&
     //    oauth_token=${ACCESS_TOKEN}&

@@ -73,15 +73,6 @@ const ReleaseReviewScreen = (props: Props) => {
                 <Text style={styles.text}>{track.title}</Text>
               </View>
             ))}
-
-            {/* <TouchableOpacity style={styles.label}>
-              <Text style={{ color: "#DCF0FF" }}>Label</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>Drain you</Text>
-            <TouchableOpacity style={styles.label}>
-              <Text style={{ color: "#DCF0FF" }}>Label</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>Breed</Text> */}
           </ScrollView>
         </View>
       </View>

@@ -5,36 +5,59 @@ import {
   RECEIVE_SEARCH,
   RECEIVE_RELEASE_DATA,
 } from "../action/types";
-import { ImageSourcePropType } from "react-native";
+import { ImageURISource } from "react-native";
 
 interface initial {
   artists: {
     type: String;
     id: number;
-    cover_image: ImageSourcePropType;
+    cover_image: ImageURISource;
     title: String;
     genre: String;
     style: String;
+    thumb: string;
   }[];
   labels: {
     type: String;
     id: number;
-    cover_image: ImageSourcePropType;
+    cover_image: ImageURISource;
     title: String;
     genre: String;
     style: String;
   }[];
-  artist: {};
-  releases: [];
-  release: {};
+  artist: {
+    profile: String;
+  };
+  releases: {
+    id: number;
+    title: string;
+    thumb: string;
+    label: string;
+    year: string;
+    artist: string;
+    format: string;
+  }[];
+  release: {
+    title: String;
+    genres: String;
+    styles: String;
+    tracklist: { title: string }[];
+  };
 }
 
 const initial: initial = {
   artists: [],
   labels: [],
-  artist: {},
+  artist: {
+    profile: "",
+  },
   releases: [],
-  release: {},
+  release: {
+    title: "",
+    genres: "",
+    styles: "",
+    tracklist: [],
+  },
 };
 
 export default (state = initial, action: actionTypes): initial => {
@@ -45,10 +68,10 @@ export default (state = initial, action: actionTypes): initial => {
         return state;
       }
       const artists = action.data
-        .filter((result) => result.type === "artist")
+        .filter((result: { type: string }) => result.type === "artist")
         .map((result) => result);
       const labels = action.data
-        .filter((result) => result.type === "label")
+        .filter((result: { type: string }) => result.type === "label")
         .map((result) => result);
 
       return {

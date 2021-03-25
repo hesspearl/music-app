@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageSourcePropType,
+  ImageURISource,
 } from "react-native";
 import Texts from "./Texts";
 import { useTheme } from "@react-navigation/native";
@@ -13,7 +14,7 @@ interface Props {
   onPress: () => void;
   color: "primary" | "card";
 
-  pic: ImageSourcePropType | { uri: ImageSourcePropType };
+  pic: ImageURISource;
 
   txt_1: String;
   txt_2: String;
