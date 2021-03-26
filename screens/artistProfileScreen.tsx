@@ -1,73 +1,125 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, StyleSheet, Text ,TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ImageSourcePropType,
+} from "react-native";
 import Texts from "../components/Texts";
 import { useTheme } from "@react-navigation/native";
-import Releases from "../components/releases"
-import { ProfileScreenNavigationProp  , ProfileScreenRouteProp} from "../index";
+import Releases from "../components/releases";
+import { ProfileScreenNavigationProp, ProfileScreenRouteProp } from "../@types";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/reducer/root";
+import {
+  requestArtistAction,
+  requestReleasesAction,
+} from "../store/action/action";
 
 interface Props {
-  route:ProfileScreenRouteProp
+  route: ProfileScreenRouteProp;
   navigation: ProfileScreenNavigationProp;
 }
-const artistReviewScreen = (props:Props) => {
-  const { colors } = useTheme();
-  const {id}=props.route.params
 
-  
+interface artistTypes {
+  thumb: string;
+  title: String;
+  genre: String;
+  style: String;
+}
+const artistReviewScreen = (props: Props) => {
+  const { colors } = useTheme();
+  const { id } = props.route.params;
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.release);
+  const [artist, setArtist] = useState<artistTypes>({
+    thumb: "",
+    title: "",
+    genre: "",
+    style: "",
+  });
+
+  useEffect(() => {
+    dispatch(requestArtistAction(id));
+    dispatch(requestReleasesAction(id, "artists"));
+    getArtistData();
+  }, [id]);
+
+  const getArtistData = () => {
+    const data = state.artists.filter((artist) => artist.id === id);
+    const artist = { ...data[0] };
+
+    setArtist(artist);
+  };
+
+  const mainAlbums = state.releases.slice(0, 3);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.imgContainer}>
-            <Image
-              source={require("../assets/image/profile-pic-nirvana.jpg")}
-              style={styles.image}
-            />
+            {!state.artist ? (
+              <Image
+                source={require("../assets/image/profile-pic-nirvana.jpg")}
+                style={styles.image}
+              />
+            ) : (
+              <Image source={{ uri: artist.thumb }} style={styles.image} />
+            )}
           </View>
 
           <View style={styles.textContainer}>
-            <Texts style={styles.text}> Nirvana</Texts>
-            <Texts style={styles.text}> Rock Band</Texts>
-            <Texts style={styles.text}> USA</Texts>
+            <Texts style={styles.text}> {artist.title}</Texts>
+
+            <Texts style={styles.text}> {artist.genre}</Texts>
+
+            <Texts style={styles.text}> {artist.style}</Texts>
           </View>
         </View>
         <View style={styles.body}>
-          <Text style={{ ...styles.paragraph, color: colors.text }}>
-            Nirvana formed in 1987. Considered by many to be the leading lights
-            of the Seattle grunge scene of the late 1980s/early 1990s.and
-            perhaps the most influential rock band of Generations X & Y, Nirvana
-            was a powerful trio of musicians who brought a unique aesthetic to a
-            growing-stale rock scene.
-          </Text>
+          <ScrollView style={styles.paragraphContainer}>
+            <Text style={{ ...styles.paragraph, color: colors.text }}>
+              {state.artist.profile}
+            </Text>
+          </ScrollView>
         </View>
       </View>
       {/* <Text style={{ ...styles.text, color: colors.card }}> Members</Text> */}
-      <View style={{...styles.titles,alignItems:"flex-start",}}>
-         <Text style={{ ...styles.text, color: colors.card }}> Releases</Text>
-      </View>
-     
-      <View style={styles.releases}>
-     <Releases
-     onPress={()=> props.navigation.navigate("releaseReview")}
-     pic={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}/>
-     <Releases pic={require("../assets/image/R-2070548-1554732548-3612.jpeg.jpg")}/>
-     <Releases pic={require("../assets/image/R-3627741-1353197616-4967.jpeg.jpg")}/>
+      <View style={{ ...styles.titles, alignItems: "flex-start" }}>
+        <Text style={{ ...styles.text, color: colors.card }}> Releases</Text>
       </View>
 
-    <TouchableOpacity
-    
-    style={{...styles.titles,alignItems:"flex-end",}}
-    
-    onPress={() => props.navigation.navigate("release") }>
-      <Text
-      style={{ ...styles.text, color: colors.card }}> Show All > </Text>
-    </TouchableOpacity>
-      
+      <View style={styles.releases}>
+        {mainAlbums.map((release) => (
+          <View key={release.id}>
+            <Releases
+              onPress={() =>
+                props.navigation.navigate("release", { id: release.id })
+              }
+              title={release.title}
+              pic={{ uri: release.thumb }}
+            />
+          </View>
+        ))}
+      </View>
+
+      <TouchableOpacity
+        style={{ ...styles.titles, alignItems: "flex-end" }}
+        onPress={() => props.navigation.navigate("artistReleases")}
+      >
+        <Text style={{ ...styles.text, color: colors.card }}>
+          {" "}
+          Show All {">"}{" "}
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +131,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: "50%",
     borderRadius: 10,
-    
+
     padding: 5,
 
     marginVertical: 50,
@@ -113,13 +165,18 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 17,
   },
-  releases:{
-    flexDirection:"row"
+
+  paragraphContainer: {
+    height: "60%",
   },
-  titles:{
-    width:"100%",
-    
-     padding:10}
+  releases: {
+    flexDirection: "row",
+  },
+  titles: {
+    width: "100%",
+
+    padding: 10,
+  },
 });
 
 export default artistReviewScreen;

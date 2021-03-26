@@ -4,16 +4,21 @@ import {
   Image,
   StyleSheet,
   ImageSourcePropType,
+  Text,
+  GestureResponderEvent,
 } from "react-native";
 
-type props = {
+interface Props {
   pic: ImageSourcePropType;
-  onPress?: Function;
-};
-const Releases = ({ pic, onPress }: props) => {
+  onPress: (event: GestureResponderEvent) => void;
+  title: string;
+}
+const Releases = ({ pic, onPress, title }: Props) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Image style={styles.image} source={pic} />
+      <Text style={styles.txt}>{title}</Text>
+
+      {/* <Image style={styles.image} source={pic} /> */}
     </TouchableOpacity>
   );
 };
@@ -21,16 +26,22 @@ const Releases = ({ pic, onPress }: props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#DCF0FF",
-    width: 110,
-    height: 110,
+    width: 100,
+    height: 100,
     borderRadius: 5,
     elevation: 5,
     padding: 5,
     margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
     width: 100,
     height: 100,
+  },
+  txt: {
+    color: "#D392FC",
+    fontWeight: "bold",
   },
 });
 

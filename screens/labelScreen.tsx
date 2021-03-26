@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
@@ -9,36 +9,55 @@ import {
   ScrollView,
 } from "react-native";
 import Texts from "../components/Texts";
-import { ProfileScreenNavigationProp } from "../index";
+import { ProfileScreenNavigationProp, ProfileScreenRouteProp } from "../@types";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/reducer/root";
+import { requestReleasesAction } from "../store/action/action";
+import SearchCard from "../components/searchCard";
+
 interface Props {
-  navigation: ProfileScreenNavigationProp;
+  route: ProfileScreenRouteProp;
 }
 
-const ReleaseReviewScreen = (props: Props) => {
+const LabelReleasesScreen = (props: Props) => {
+  const { id } = props.route.params;
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.release);
+  const [label, setLabel] = useState<{ title: String }>({ title: "" });
+
+  useEffect(() => {
+    dispatch(requestReleasesAction(id, "labels"));
+    getLabelData();
+  }, [id]);
+
+  const getLabelData = () => {
+    const label = state.labels.filter((label) => label.id === id);
+
+    setLabel({ ...label[0] });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Image
+        {/* <Image
           style={styles.poster}
           source={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
-        />
+        /> */}
         <View style={styles.header}>
           <View style={styles.imgContainer}>
-            <Image
+            {/* <Image
               source={require("../assets/image/profile-pic-nirvana.jpg")}
               style={styles.avatar}
-            />
+            /> */}
           </View>
 
           <View style={styles.textContainer}>
-            <Texts> Nirvana</Texts>
-            <Texts> Rock Band</Texts>
-            <Texts> USA</Texts>
+            <Texts style={styles.text}> label name : {label.title}</Texts>
           </View>
         </View>
 
         <View style={styles.titles}>
-          <Text style={styles.text}> Track List</Text>
+          <Text style={styles.text}> Releases List</Text>
         </View>
         <View style={styles.list}>
           <ScrollView
@@ -46,21 +65,15 @@ const ReleaseReviewScreen = (props: Props) => {
               flex: 1,
             }}
           >
-            <Text style={styles.text}>Radio Friendly Unit Shifter</Text>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("releaseReview")}
-              style={styles.label}
-            >
-              <Text style={{ color: "#DCF0FF" }}>Label</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>Drain you</Text>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("releaseReview")}
-              style={styles.label}
-            >
-              <Text style={{ color: "#DCF0FF" }}>Label</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>Breed</Text>
+            {state.releases.map((release) => (
+              <View key={release.id} style={styles.cardContainer}>
+                <View>
+                  <Text style={styles.text}>{release.title}</Text>
+                  <Text style={styles.text}>{release.artist}</Text>
+                  <Text style={styles.text}>{release.format}</Text>
+                </View>
+              </View>
+            ))}
           </ScrollView>
         </View>
       </View>
@@ -78,7 +91,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: "95%",
     borderRadius: 10,
-    padding: 10,
+
     marginVertical: 10,
     alignItems: "center",
   },
@@ -103,22 +116,15 @@ const styles = StyleSheet.create({
   textContainer: {
     margin: 5,
   },
-  label: {
-    width: 60,
-    height: 25,
-    borderRadius: 20,
-    backgroundColor: "#DEAAFF",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    elevation: 10,
-  },
+
   list: {
     backgroundColor: "#FFDFF7",
     width: "90%",
-    height: "60%",
+    height: "80%",
     borderRadius: 10,
     padding: 20,
+    elevation: 10,
+    marginTop: 10,
   },
   titles: {
     width: "100%",
@@ -131,6 +137,17 @@ const styles = StyleSheet.create({
     color: "#D392FC",
     marginBottom: 5,
   },
+  cardContainer: {
+    width: "100%",
+    height: 100,
+    borderRadius: 10,
+    backgroundColor: "#DCF0FF",
+    padding: 10,
+    alignItems: "center",
+    flexDirection: "row",
+    marginVertical: 10,
+    elevation: 10,
+  },
 });
 
-export default ReleaseReviewScreen;
+export default LabelReleasesScreen;

@@ -1,30 +1,58 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { Config } from "react-native-config";
+import {
+  ACCESS_TOKEN,
+  ACCESS_TOKEN_SECRET,
+  CONSUMER_KEY,
+  CONSUMER_SECRET,
+} from "@env";
+import { ObjectResult } from "../store/action/types";
 
-const token = Config.ACCESS_TOKEN;
-const tokenSecret = Config.ACCESS_TOKEN_SECRET;
-const consumerKey = Config.CONSUMER_KEY;
-const consumerSecret = Config.CONSUMER_SECRET;
-
-export const search = async (query: string) => {
-  var myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `OAuth oauth_consumer_key="dJZgZiJRMZjGNayVBeUD",
-    oauth_token="lfIvAWBSBARGZWIanwjbxvkNqxhIrbicdvUQSglc",
-    oauth_signature_method="PLAINTEXT",oauth_timestamp="1615231142",
-    oauth_nonce="XUTShnXOEU5",oauth_version="1.0",
-    oauth_signature="nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26geDxRrskTRIkpDhCgwhvMnoSbPwwPyiQSaZYjaKX"`
-  );
-
-  var requestOptions: RequestInit = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
+export const search = (query: String): Promise<string | void> => {
+  var config = {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 
-  fetch(`https://api.discogs.com/database/search?q=${query}`, requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
+  const searchResult = fetch(
+    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=KCMMmpOGDFMnKFFhvlVhjFiTAGwePCmxSvEiTTyl&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616596122&oauth_nonce=6o2JV7f8PR0&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26NiBdttZojcETaMxFdScHGWeKLKEPnwXHQZbJUYpr`,
+
+    //    &oauth_consumer_key=${CONSUMER_KEY}&
+    //    oauth_token=${ACCESS_TOKEN}&
+    //    oauth_signature_method=PLAINTEXT
+    //    &oauth_version=1.0
+    //  &oauth_signature=${CONSUMER_SECRET}%26${ACCESS_TOKEN_SECRET}`,
+    config
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      //console.log("result", result);
+      return result.results;
+    })
+    .catch((error) => console.log("error", error));
+
+  return searchResult;
+};
+
+export const getArtistData = async (id: Number) => {
+  return fetch(`https://api.discogs.com/artists/${id}`)
+    .then((response) => response.json())
+    .then((result) => result)
+    .catch((error) => console.log("error", error));
+};
+
+export const getReleases = async (id: Number, type: String) => {
+  return fetch(`https://api.discogs.com/${type}/${id}/releases?per_page=20`)
+    .then((response) => response.json())
+    .then((result) => result.releases)
+    .catch((error) => console.log("error", error));
+};
+
+export const getReleaseData = async (id: Number) => {
+  console.log(id);
+  return fetch(`https://api.discogs.com/masters/${id}`)
+    .then((response) => response.json())
+    .then((result) => result)
     .catch((error) => console.log("error", error));
 };
