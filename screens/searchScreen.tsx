@@ -37,6 +37,7 @@ const SearchScreen = ({ ...props }: Props) => {
       <HeadPhone width="100" height="241" />
       <PlayButton width="177" height="128" />
 
+
       <View style={styles.searchContainer}>
         <View style={styles.input}>
           <TextInput
@@ -94,6 +95,7 @@ const SearchScreen = ({ ...props }: Props) => {
                 </View>
               ))}
         </ScrollView>
+
       </View>
     </View>
   );
@@ -115,6 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingTop: 50,
   },
+
   button: {
     width: 50,
     height: 50,
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
+
   },
 });
 
