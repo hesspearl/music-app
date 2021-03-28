@@ -16,7 +16,7 @@ export const search = (query: String): Promise<string | void> => {
   };
 
   const searchResult = fetch(
-    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=KCMMmpOGDFMnKFFhvlVhjFiTAGwePCmxSvEiTTyl&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616596122&oauth_nonce=6o2JV7f8PR0&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26NiBdttZojcETaMxFdScHGWeKLKEPnwXHQZbJUYpr`,
+    `https://api.discogs.com/database/search?q=${query}&oauth_consumer_key=dJZgZiJRMZjGNayVBeUD&oauth_token=PbZslDKGSYUsnBpCdTqxeGpokTwSwWanwdjrpSgb&oauth_signature_method=PLAINTEXT&oauth_timestamp=1616931396&oauth_nonce=KHV6Q0TVQ5B&oauth_version=1.0&oauth_signature=nPWHEQPtSrQNKauKEPetwmEeEMDCGyRd%26OUtgsXSZqmBzYewOHnSWKhRFfXjRVoQzNPBcHcJH`,
 
     //    &oauth_consumer_key=${CONSUMER_KEY}&
     //    oauth_token=${ACCESS_TOKEN}&

@@ -11,7 +11,7 @@ interface initial {
   artists: {
     type: String;
     id: number;
-    cover_image: ImageURISource;
+    cover_image: string;
     title: String;
     genre: String;
     style: String;

@@ -37,7 +37,6 @@ const SearchScreen = ({ ...props }: Props) => {
       <HeadPhone width="100" height="241" />
       <PlayButton width="177" height="128" />
 
-
       <View style={styles.searchContainer}>
         <View style={styles.input}>
           <TextInput
@@ -81,7 +80,7 @@ const SearchScreen = ({ ...props }: Props) => {
             : state.artists.map((artist) => (
                 <View key={artist.id}>
                   <SearchCard
-                    pic={artist.cover_image}
+                    pic={{ uri: artist.cover_image }}
                     txt_1={artist.title}
                     txt_2={artist.type}
                     txt_3={artist.style}
@@ -95,7 +94,6 @@ const SearchScreen = ({ ...props }: Props) => {
                 </View>
               ))}
         </ScrollView>
-
       </View>
     </View>
   );
@@ -141,7 +139,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
-
   },
 });
 

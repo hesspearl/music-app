@@ -39,18 +39,14 @@ const LabelReleasesScreen = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        {/* <Image
+        <Image
           style={styles.poster}
-          source={require("../assets/image/R-14071641-1567294823-6082.jpeg.jpg")}
-        /> */}
+          source={{
+            uri:
+              "https://cdn.iconscout.com/icon/free/png-256/queue-music-1779820-1513985.png ",
+          }}
+        />
         <View style={styles.header}>
-          <View style={styles.imgContainer}>
-            {/* <Image
-              source={require("../assets/image/profile-pic-nirvana.jpg")}
-              style={styles.avatar}
-            /> */}
-          </View>
-
           <View style={styles.textContainer}>
             <Texts style={styles.text}> label name : {label.title}</Texts>
           </View>
