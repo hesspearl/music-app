@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: "#FFDFF7",
     width: "90%",
-    height: "80%",
+    height: "65%",
     borderRadius: 10,
     padding: 20,
     elevation: 10,
